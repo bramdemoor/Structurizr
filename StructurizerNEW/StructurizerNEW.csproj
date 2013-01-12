@@ -76,7 +76,6 @@
     <Compile Include="Extra\VisioToPngProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Templating\ProjectDocumentationTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

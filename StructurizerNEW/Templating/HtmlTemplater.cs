@@ -1,11 +1,13 @@
 ﻿using System.IO;
-using System.Linq;
-using System.Text;
-using MarkdownSharp;
+using RazorEngine.Templating;
 using StructurizerNEW.Domain;
 
 namespace StructurizerNEW.Templating
 {
+    public class ProjectDocumentationTemplate<T> : TemplateBase<T>
+    {
+    }
+
     /// <summary>
     /// Simple Twitter Bootstrap html templater. Single file output.
     /// </summary>
@@ -15,13 +17,6 @@ namespace StructurizerNEW.Templating
         private const string bootstrapTemplate1 = "markdowncss.cshtml";
         private const string outputFilename = "index.html";
        
-        private readonly StringBuilder sb;
-
-        public HtmlTemplater()
-        {
-            sb = new StringBuilder();
-        }
-
         public HtmlTemplaterResult Process(Project project)
         {
             // Copy theme files

@@ -2,7 +2,6 @@
 using System.Linq;
 using MarkdownSharp;
 using StructurizerNEW.Extra;
-using StructurizerNEW.Templating;
 
 namespace StructurizerNEW.Domain
 {
@@ -15,7 +14,7 @@ namespace StructurizerNEW.Domain
             Level = level;
         }
 
-        public void Process(HtmlTemplater templater, string outputDir)
+        public void Process(string outputDir)
         {
             ProcessedBody = "";
 
@@ -42,7 +41,7 @@ namespace StructurizerNEW.Domain
              {
                 var ch = new Chapter(chapterDir, Level + 1);
                  ch.Parent = this;
-                 ch.Process(templater, Path.FullName);
+                 ch.Process(Path.FullName);
              }            
         }
     }

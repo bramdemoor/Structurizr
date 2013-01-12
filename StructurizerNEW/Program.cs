@@ -50,10 +50,7 @@ namespace StructurizerNEW
                     {
                         case "Project":
                             newobj = new Project(new DirectoryInfo(root.Path));
-                            break;
-                        case "ProjectIndex":
-                            newobj = new ProjectIndex(new DirectoryInfo(root.Path));
-                            break;
+                            break;                        
                         default:
                             Console.WriteLine("Unsupported type");
                             break;

@@ -68,7 +68,6 @@
     <Compile Include="Domain\FolderEntity.cs" />
     <Compile Include="Extra\FileWatcher.cs" />
     <Compile Include="FileDefinitions.cs" />
-    <Compile Include="Domain\ProjectIndex.cs" />
     <Compile Include="Domain\Project.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Templating\HtmlTemplater.cs" />

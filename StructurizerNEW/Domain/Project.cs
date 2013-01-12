@@ -23,7 +23,7 @@ namespace StructurizerNEW.Domain
             {
                 var chapter = new Chapter(chapterDir, 1);
                 chapter.Parent = this;
-                chapter.Process(templater, Path + MetaData.OutputDir);
+                chapter.Process(Path + MetaData.OutputDir);
             }
 
             var result = templater.Process(this);

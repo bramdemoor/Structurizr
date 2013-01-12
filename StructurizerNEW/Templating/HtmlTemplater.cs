@@ -30,11 +30,8 @@ namespace StructurizerNEW.Templating
             var html = GetHtml(project);
 
             html = html.Replace("$CONTENT$", new Markdown().Transform(sb.ToString()));
-            html = html.Replace("$TITLE$", project.MetaData.Name);
-            html = html.Replace("$SUBTITLE$", project.MetaData.Teaser);
 
-            using (
-                var streamWriter = new StreamWriter(project.Path + project.MetaData.OutputDir + "\\" + outputFilename))
+            using (var streamWriter = new StreamWriter(project.Path + project.MetaData.OutputDir + "\\" + outputFilename))
             {
                 streamWriter.Write(html);
             }

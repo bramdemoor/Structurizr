@@ -15,6 +15,16 @@ namespace StructurizerNEW.Domain
         public MetaFile MetaData { get; private set; }
         public IEnumerable<DirectoryInfo> SubDirectories { get; private set; }
 
+        public string PathNameWithoutSpaces
+        {
+            get { return Path.Name.Replace(" ", ""); }
+        }
+
+        public string PathNameWithoutStartingNumbers
+        {
+            get { return RemoveNr(Path.Name); }
+        }
+
         protected FolderEntity(DirectoryInfo path, string context)
         {
             Children = new List<FolderEntity>();
@@ -48,6 +58,15 @@ namespace StructurizerNEW.Domain
         public virtual void Process()
         {
             
+        }
+
+        private static string RemoveNr(string name)
+        {
+            if (name.Contains("-"))
+            {
+                name = name.Split('-').ElementAt(1);
+            }
+            return name;
         }
     }
 }

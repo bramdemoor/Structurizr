@@ -23,7 +23,22 @@
       <div class="side-nav" style="padding:10px">
           <ul class="nav nav-list affix">
               <li class="nav-header">Index</li>
-              $INDEX$
+              @foreach(var chapter in Model.Children)
+              {
+                  <li>
+                      <a href="#" data-target="@chapter.PathNameWithoutSpaces" data-bind="click: activate" class="chapter-link">@chapter.PathNameWithoutStartingNumbers</a>
+                      @if(chapter.Children.Any())
+                      {
+                          <ul class="nav nav-list">
+                              @foreach(var sect in chapter.Children)
+                              {
+                                  <li><a href="#" data-target="@sect.PathNameWithoutSpaces" data-bind="click: activateSub" class="section-link">@sect.PathNameWithoutStartingNumbers</a></li>                                  
+                              }
+                          </ul>
+                      }
+
+                  </li>
+              }
           </ul>
       </div>
     </div>

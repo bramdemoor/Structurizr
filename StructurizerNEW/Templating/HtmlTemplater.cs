@@ -27,12 +27,11 @@ namespace StructurizerNEW.Templating
             // Copy theme files
             File.Copy(Directory.GetCurrentDirectory() + relativeTemplatesPath + "\\markdown.png", project.Path + project.MetaData.OutputDir + "\\markdown.png", true);
 
-            var html = GetHtml();
+            var html = GetHtml(project);
 
             html = html.Replace("$CONTENT$", new Markdown().Transform(sb.ToString()));
             html = html.Replace("$TITLE$", project.MetaData.Name);
             html = html.Replace("$SUBTITLE$", project.MetaData.Teaser);
-            html = html.Replace("$INDEX$", GenerateIndex(project));
 
             using (
                 var streamWriter = new StreamWriter(project.Path + project.MetaData.OutputDir + "\\" + outputFilename))
@@ -43,39 +42,17 @@ namespace StructurizerNEW.Templating
             return new HtmlTemplaterResult(project.Path + project.MetaData.OutputDir + "\\" + outputFilename);
         }
 
-        private string GetHtml()
+        private string GetHtml(Project project)
         {
             using (var sr = new StreamReader(Directory.GetCurrentDirectory() + relativeTemplatesPath + bootstrapTemplate1))
             {
                 var normalHtml = sr.ReadToEnd();
 
                 // Run this through razor first!
-                normalHtml = RazorEngine.Razor.Parse(normalHtml);
+                normalHtml = RazorEngine.Razor.Parse(normalHtml, project);
 
                 return normalHtml;
             }
-        }
-
-        private string GenerateIndex(Project project)
-        {
-            var indexBuilder = new StringBuilder();
-
-            foreach (var chapter in project.Children)
-            {
-                indexBuilder.AppendFormat("<li><a href=\"#\" data-target=\"{0}\" data-bind=\"click: activate\" class=\"chapter-link\">{1}</a>", chapter.Path.Name.Replace(" ", ""), RemoveNr(chapter.Path.Name));
-                indexBuilder.Append("<ul class=\"nav nav-list\">");
-
-                foreach (var subChapter in chapter.Children)
-                {
-                    indexBuilder.AppendFormat("<li><a href=\"#\" data-target=\"{0}\" data-bind=\"click: activateSub\" class=\"section-link\">{1}</a></li>", subChapter.Path.Name.Replace(" ", ""), RemoveNr(subChapter.Path.Name));
-                }
-
-                indexBuilder.Append("</ul>");
-                indexBuilder.Append("</li>");
-
-            }
-
-            return indexBuilder.ToString();
         }
 
         public void AppendChapterStart(string name)

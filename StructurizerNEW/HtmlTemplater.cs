@@ -12,7 +12,7 @@ namespace StructurizerNEW
     public class HtmlTemplater
     {
         private const string relativeTemplatesPath = "\\App_Data\\Templates\\";
-        private const string bootstrapTemplate1 = "markdowncss.htm";
+        private const string bootstrapTemplate1 = "markdowncss.cshtml";
         private const string outputFilename = "index.html";
        
         private readonly StringBuilder sb;

@@ -18,9 +18,35 @@ namespace StructurizerNEW.Domain
 
         public string ProcessedBody { get; set; }
 
-        public string PathNameWithoutSpaces
+        public bool HasChildren
         {
-            get { return Path.Name.Replace(" ", ""); }
+            get { return Children.Any(); }
+        }
+
+        public bool HasOwnContent
+        {
+            get { return !string.IsNullOrWhiteSpace(ProcessedBody); }
+        }
+
+        public string PathNameWithoutSpacesAndSlashes
+        {
+            get { return Path.Name.Replace(" ", "").Replace("/", "-"); }
+        }
+
+        public string FullPathNameWithoutSpacesAndSlashes
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                if (Parent != null && Parent is Chapter)
+                {
+                    sb.Append(Parent.PathNameWithoutSpacesAndSlashes);
+                    sb.Append("-");
+                }
+                sb.Append(PathNameWithoutSpacesAndSlashes);
+
+                return sb.ToString();               
+            }
         }
 
         public string NavItemHash
@@ -31,10 +57,10 @@ namespace StructurizerNEW.Domain
                 sb.Append("#/");
                 if(Parent != null && Parent is Chapter)
                 {
-                    sb.Append(Parent.PathNameWithoutSpaces);
+                    sb.Append(Parent.PathNameWithoutSpacesAndSlashes);
                     sb.Append("/");
                 }
-                sb.Append(PathNameWithoutSpaces);
+                sb.Append(PathNameWithoutSpacesAndSlashes);
 
                 return sb.ToString();
             }

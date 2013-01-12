@@ -22,16 +22,20 @@
                       <li class="nav-header">Index</li>
                       @foreach(var chapter in Model.Children)
                       {
-                          <li>
-                              <a href="@chapter.NavItemHash" class="chapter-link">@chapter.PathNameWithoutStartingNumbers</a>
+                          <li>                              
                               @if(chapter.Children.Any())
                               {
+                                  <a href="@(chapter.NavItemHash + "/root")" class="chapter-link">@chapter.PathNameWithoutStartingNumbers</a>
                                   <ul class="nav nav-list">
-                                      @foreach(var sect in chapter.Children)
+                                      @foreach (var sect in chapter.Children)
                                       {
                                           <li><a href="@sect.NavItemHash" class="section-link">@sect.PathNameWithoutStartingNumbers</a></li>                                  
                                       }
                                   </ul>
+                              }
+                              else
+                              {
+                                   <a href="@chapter.NavItemHash" class="chapter-link">@chapter.PathNameWithoutStartingNumbers</a> 
                               }
 
                           </li>
@@ -42,19 +46,29 @@
              <div class="fluid-content">
                 <div style="padding:10px; margin-left:250px;margin-right:10px;">
                      <div class="page-header">
-                            <h1>@Model.MetaData.Name <small style="font-size:small;">@Model.MetaData.Teaser</small></h1>
-                            <img src="markdown.png" class="img-polaroid" style="width:32px; height:32px;"> Generated from markdown using Structurizr
-                        </div>
+                        <h1>@Model.MetaData.Name <small style="font-size:small;">@Model.MetaData.Teaser</small></h1>
+                        <img src="markdown.png" class="img-polaroid" style="width:32px; height:32px;"> Generated from markdown using Structurizr
+                    </div>
                         @foreach (var chapter in Model.Children)
                         {
-                            <div class="chapter" id="@chapter.PathNameWithoutSpaces">
+                            <div class="chapter" id="@chapter.PathNameWithoutSpacesAndSlashes">
                                 <h2>@chapter.PathNameWithoutStartingNumbers</h2>
                     
-                                @Raw(chapter.ProcessedBody)
+                                @if (chapter.HasOwnContent && chapter.HasChildren)
+                                {
+                                    <!-- Fabricated root section -->
+                                    <div class="section" id="@(chapter.PathNameWithoutSpacesAndSlashes + "-root")">
+                                        @Raw(chapter.ProcessedBody)   
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Raw(chapter.ProcessedBody)    
+                                }                                                                
 
                                 @foreach (var sect in chapter.Children)
                                 {
-                                    <div class="section" id="@sect.PathNameWithoutSpaces">
+                                    <div class="section" id="@sect.FullPathNameWithoutSpacesAndSlashes">
                                         <h3>@sect.PathNameWithoutStartingNumbers</h3>
                                         @Raw(sect.ProcessedBody)
                                     </div>
@@ -65,18 +79,15 @@
               </div>  
         </div>            
         <script type="text/javascript">
-
-
-            $(document).ready(function () {
-
+            $(document).ready(function () {               
                 Path.map('#(/:chap)(/:sect)').to(function () {
                     $('.chapter').hide();
                     $('.section').hide();
                     if (this.params.chap) {
                         $(document.getElementById(this.params.chap)).show();
-                    }
-                    if (this.params.sect) {
-                        $(document.getElementById(this.params.sect)).show();
+                        if (this.params.sect) {
+                            $(document.getElementById(this.params.chap + '-' + this.params.sect)).show();
+                        }
                     }
                     console.log(this.params);
                 });

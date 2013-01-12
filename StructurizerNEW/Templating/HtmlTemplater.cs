@@ -29,8 +29,6 @@ namespace StructurizerNEW.Templating
 
             var html = GetHtml(project);
 
-            html = html.Replace("$CONTENT$", new Markdown().Transform(sb.ToString()));
-
             using (var streamWriter = new StreamWriter(project.Path + project.MetaData.OutputDir + "\\" + outputFilename))
             {
                 streamWriter.Write(html);
@@ -47,48 +45,10 @@ namespace StructurizerNEW.Templating
 
                 // Run this through razor first!
                 normalHtml = RazorEngine.Razor.Parse(normalHtml, project);
-
+                
                 return normalHtml;
             }
-        }
-
-        public void AppendChapterStart(string name)
-        {            
-            sb.AppendFormat("<div class=\"chapter\" id=\"{0}\">", name.Replace(" ", ""));
-
-            sb.AppendFormat("<h2>{0}</h2>", RemoveNr(name));
-        }
-
-        private static string RemoveNr(string name)
-        {
-            if (name.Contains("-"))
-            {
-                name = name.Split('-').ElementAt(1);
-            }
-            return name;
-        }
-
-        public void Append(string text)
-        {
-            sb.Append(text);
-        }
-
-        public void AppendChapterEnd()
-        {
-            sb.AppendFormat("</div>");
-        }
-
-        public void AppendSubChapterEnd()
-        {
-            sb.AppendFormat("</div>");
-        }
-
-        public void AppendSubChapterStart(string name)
-        {
-            sb.AppendFormat("<div class=\"subchapter\" id=\"{0}\">", name.Replace(" ", ""));
-
-            sb.AppendFormat("<h3>{0}</h3>", RemoveNr(name));
-        }
+        }     
     }
 
     public class HtmlTemplaterResult

@@ -48,9 +48,24 @@
                 <h1>@Model.MetaData.Name <small style="font-size:small;">@Model.MetaData.Teaser</small></h1>
                 <img src="markdown.png" class="img-polaroid" style="width:32px; height:32px;"> Generated from markdown using Structurizr
             </div>
-            $CONTENT$ 
+            @foreach (var chapter in Model.Children)
+            {
+                <div class="chapter" id="@chapter.PathNameWithoutSpaces">
+                    <h2>@chapter.PathNameWithoutStartingNumbers</h2>
+                    
+                    @Raw(chapter.ProcessedBody)
+
+                    @foreach (var sect in chapter.Children)
+                    {
+                        <div class="subchapter" id="@sect.PathNameWithoutSpaces">
+                            <h3>@sect.PathNameWithoutStartingNumbers</h3>
+                            @Raw(sect.ProcessedBody)
+                        </div>
+                    }
+                </div>
+            }
         </div>
-  </div>
+  </div>  
 </div>
       
       

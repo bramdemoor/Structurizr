@@ -15,6 +15,8 @@ namespace StructurizerNEW.Domain
         public MetaFile MetaData { get; private set; }
         public IEnumerable<DirectoryInfo> SubDirectories { get; private set; }
 
+        public string ProcessedBody { get; set; }
+
         public string PathNameWithoutSpaces
         {
             get { return Path.Name.Replace(" ", ""); }

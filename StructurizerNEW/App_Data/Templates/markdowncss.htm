@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>$TITLE$</title>
+    
+    <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="http://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">-->
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    
+    <style>
+        .sidebar-nav-fixed {
+     position:fixed;
+     top:60px;
+     width:21.97%;
+ }
+    </style>
+</head>
+    <body>
+        
+        <div class="fluid-container sidebar-left">
+  <div class="fluid-sidebar" style="position: fixed;">
+      <div class="side-nav" style="padding:10px">
+          <ul class="nav nav-list affix">
+              <li class="nav-header">Index</li>
+              $INDEX$
+          </ul>
+      </div>
+    </div>
+ <div class="fluid-content">
+    <div style="padding:10px; margin-left:250px;margin-right:10px;">
+         <div class="page-header">
+                <h1>$TITLE$ <small style="font-size:small;">$SUBTITLE$</small></h1>
+                <img src="markdown.png" class="img-polaroid" style="width:32px; height:32px;"> Generated from markdown using Structurizr
+            </div>
+            $CONTENT$ 
+        </div>
+  </div>
+</div>
+      
+      
+        <script type="text/javascript">
+
+            $(function () {
+                $(".chapter").hide();
+
+
+                var BetterListModel = function () {
+                    this.activeItem = ko.observable("");
+
+                    this.activate = function (data, event) {
+                        $(".chapter").hide();
+                        var id = $(event.srcElement)[0].attributes['data-target'].value;
+                        $("#" + id).show();
+                    };
+
+                    this.activateSub = function(data, event) {
+                        $(".subchapter").hide();
+                        var id = $(event.srcElement)[0].attributes['data-target'].value;
+                        $("#" + id).show();                        
+                    };
+                };
+
+                ko.applyBindings(new BetterListModel());
+            });
+
+          
+
+        </script>
+           
+    </body>
+</html>

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
 using MarkdownSharp;
+using StructurizerNEW.Domain;
 
-namespace StructurizerNEW
+namespace StructurizerNEW.Templating
 {
     /// <summary>
     /// Simple Twitter Bootstrap html templater. Single file output.
@@ -27,22 +27,33 @@ namespace StructurizerNEW
             // Copy theme files
             File.Copy(Directory.GetCurrentDirectory() + relativeTemplatesPath + "\\markdown.png", project.Path + project.MetaData.OutputDir + "\\markdown.png", true);
 
-            using (var sr = new StreamReader(ReadTemplate(bootstrapTemplate1)))
-            {
-                var html = sr.ReadToEnd();
-                
-                html = html.Replace("$CONTENT$", new Markdown().Transform(sb.ToString()));
-                html = html.Replace("$TITLE$", project.MetaData.Name);
-                html = html.Replace("$SUBTITLE$", project.MetaData.Teaser);
-                html = html.Replace("$INDEX$", GenerateIndex(project));
+            var html = GetHtml();
 
-                using (var streamWriter = new StreamWriter(project.Path + project.MetaData.OutputDir + "\\" + outputFilename))
-                {
-                    streamWriter.Write(html);
-                }
+            html = html.Replace("$CONTENT$", new Markdown().Transform(sb.ToString()));
+            html = html.Replace("$TITLE$", project.MetaData.Name);
+            html = html.Replace("$SUBTITLE$", project.MetaData.Teaser);
+            html = html.Replace("$INDEX$", GenerateIndex(project));
+
+            using (
+                var streamWriter = new StreamWriter(project.Path + project.MetaData.OutputDir + "\\" + outputFilename))
+            {
+                streamWriter.Write(html);
             }
 
             return new HtmlTemplaterResult(project.Path + project.MetaData.OutputDir + "\\" + outputFilename);
+        }
+
+        private string GetHtml()
+        {
+            using (var sr = new StreamReader(Directory.GetCurrentDirectory() + relativeTemplatesPath + bootstrapTemplate1))
+            {
+                var normalHtml = sr.ReadToEnd();
+
+                // Run this through razor first!
+                normalHtml = RazorEngine.Razor.Parse(normalHtml);
+
+                return normalHtml;
+            }
         }
 
         private string GenerateIndex(Project project)
@@ -65,11 +76,6 @@ namespace StructurizerNEW
             }
 
             return indexBuilder.ToString();
-        }
-
-        private static string ReadTemplate(string name)
-        {
-            return Directory.GetCurrentDirectory() + relativeTemplatesPath + name;
         }
 
         public void AppendChapterStart(string name)

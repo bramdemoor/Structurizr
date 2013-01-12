@@ -71,11 +71,12 @@
     <Compile Include="Domain\ProjectIndex.cs" />
     <Compile Include="Domain\Project.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="HtmlTemplater.cs" />
+    <Compile Include="Templating\HtmlTemplater.cs" />
     <Compile Include="Extra\ExcelToHtmlTableProcessor.cs" />
     <Compile Include="Extra\VisioToPngProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templating\ProjectDocumentationTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

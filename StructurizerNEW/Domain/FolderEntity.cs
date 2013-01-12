@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace StructurizerNEW
+namespace StructurizerNEW.Domain
 {
     public abstract class FolderEntity
     {

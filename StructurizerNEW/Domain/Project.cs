@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using StructurizerNEW.Extra;
 using System.Linq;
+using StructurizerNEW.Templating;
 
-namespace StructurizerNEW
+namespace StructurizerNEW.Domain
 {
     public class Project : FolderEntity
     {

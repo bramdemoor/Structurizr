@@ -1,8 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
 using StructurizerNEW.Extra;
+using StructurizerNEW.Templating;
 
-namespace StructurizerNEW
+namespace StructurizerNEW.Domain
 {
     public class Chapter : FolderEntity
     {

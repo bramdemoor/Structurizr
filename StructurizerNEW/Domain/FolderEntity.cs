@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace StructurizerNEW.Domain
@@ -20,6 +21,23 @@ namespace StructurizerNEW.Domain
         public string PathNameWithoutSpaces
         {
             get { return Path.Name.Replace(" ", ""); }
+        }
+
+        public string NavItemHash
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                sb.Append("#/");
+                if(Parent != null && Parent is Chapter)
+                {
+                    sb.Append(Parent.PathNameWithoutSpaces);
+                    sb.Append("/");
+                }
+                sb.Append(PathNameWithoutSpaces);
+
+                return sb.ToString();
+            }
         }
 
         public string PathNameWithoutStartingNumbers

@@ -1,19 +1,20 @@
 ﻿@inherits StructurizerNEW.Templating.ProjectDocumentationTemplate<StructurizerNEW.Domain.Project>
 <!DOCTYPE html>
 <html ng-app>
-<head>
-    <title>@Model.MetaData.Name</title>    
-    <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://raw.github.com/mtrpcic/pathjs/master/path.js"></script>
-    <style>
-        .sidebar-nav-fixed {
-             position:fixed;
-             top:60px;
-             width:21.97%;
-         }
-    </style>
-</head>
+    <head>
+        <meta charset="utf-8">
+        <title>@Model.MetaData.Name</title>    
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://raw.github.com/mtrpcic/pathjs/master/path.js"></script>
+        <style>
+            .sidebar-nav-fixed {
+                position:fixed;
+                top:60px;
+                width:21.97%;
+            }
+        </style>
+    </head>
     <body>
         <div class="fluid-container sidebar-left">
           <div class="fluid-sidebar" style="position: fixed;">

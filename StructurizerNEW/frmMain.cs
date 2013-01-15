@@ -42,6 +42,7 @@ namespace StructurizerNEW
         {
             treeView1.Nodes.Clear();
             var applicationNode = treeView1.Nodes.Add("Structurizr");
+            
 
             using (var sr = new StreamReader(configFilePath))
             {

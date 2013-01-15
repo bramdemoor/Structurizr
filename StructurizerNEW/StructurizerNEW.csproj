@@ -73,7 +73,6 @@
   <ItemGroup>
     <Compile Include="Domain\Chapter.cs" />
     <Compile Include="Domain\FolderEntity.cs" />
-    <Compile Include="Extra\FileWatcher.cs" />
     <Compile Include="FileDefinitions.cs" />
     <Compile Include="Domain\Project.cs" />
     <Compile Include="ExtensionMethods.cs" />

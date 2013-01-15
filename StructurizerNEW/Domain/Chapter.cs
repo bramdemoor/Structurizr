@@ -10,7 +10,7 @@ namespace StructurizerNEW.Domain
         public int Level { get; set; }
 
         public Chapter( DirectoryInfo path, int level, string outputDir) : base(path, "chapter")
-        {
+        {            
             OutputDir = outputDir;
             Level = level;
 

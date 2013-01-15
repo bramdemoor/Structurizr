@@ -87,16 +87,22 @@ namespace StructurizerNEW.Domain
             ReadSubdirectories();
         }
 
-        protected void ReadMetadata()
+        private void ReadMetadata()
         {
             var temp = Path.GetFiles("meta.json").FirstOrDefault();
             if (temp != null)
             {
-                MetaData = JsonConvert.DeserializeObject<MetaFile>(new StreamReader(temp.OpenRead()).ReadToEnd());
+                using (var fs = temp.OpenRead())
+                {
+                    using (var sr = new StreamReader(fs))
+                    {
+                        MetaData = JsonConvert.DeserializeObject<MetaFile>(sr.ReadToEnd());
+                    }                    
+                }
             }
         }
 
-        protected void ReadSubdirectories()
+        private void ReadSubdirectories()
         {
             //MetaData.Include
 

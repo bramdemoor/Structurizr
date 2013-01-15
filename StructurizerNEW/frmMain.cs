@@ -13,11 +13,17 @@ namespace StructurizerNEW
     {
         private readonly List<FolderEntity> activeRoots = new List<FolderEntity>();
 
+        private readonly string configPath;
+
+        private FileSystemWatcher fileWatcher;
+
         public frmMain(string configPath = null)
         {
             InitializeComponent();
 
-            LoadConfig(configPath);
+            this.configPath = configPath;
+
+            LoadConfig();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -32,18 +38,26 @@ namespace StructurizerNEW
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            lblModifications.Visible = false;
+
             foreach (var processingRoot in activeRoots)
             {
                 processingRoot.Process();
             }
         }
 
-        private void LoadConfig(string configFilePath)
+        private void LoadConfig()
         {
+            if(fileWatcher != null)
+            {
+                fileWatcher.Dispose();
+                fileWatcher = null;
+            }
+
             treeView1.Nodes.Clear();
             var applicationNode = treeView1.Nodes.Add("Structurizr");           
 
-            using (var sr = new StreamReader(configFilePath))
+            using (var sr = new StreamReader(configPath))
             {
                 var configObj = JsonConvert.DeserializeObject<CoreFile>(sr.ReadToEnd());
 
@@ -71,10 +85,7 @@ namespace StructurizerNEW
                             break;
                     }
 
-                    if (root.WatchFiles)
-                    {
-                        new FileWatcher(newobj);
-                    }
+                    CreateFileWatcher(root.Path);
 
                     activeRoots.Add(newobj);
                 }
@@ -87,5 +98,31 @@ namespace StructurizerNEW
         {
 
         }
+
+        /// <summary>
+        /// Sets up a FileWatcher, wires up the events and starts watching 
+        /// </summary>
+        private void CreateFileWatcher(string path)
+        {
+            fileWatcher = new FileSystemWatcher { Path = path };
+
+            fileWatcher.Changed += (s, e) => OnChangeDected();
+            fileWatcher.Created += (s, e) => OnChangeDected();
+            fileWatcher.Deleted += (s, e) => OnChangeDected();
+            fileWatcher.Renamed += (s, e) => OnChangeDected();
+
+            fileWatcher.EnableRaisingEvents = true;
+        }
+
+        private void OnChangeDected()
+        {
+            lblModifications.Invoke(new MethodInvoker(delegate
+                                                          {
+                                                              lblModifications.Visible = true;
+                                                              lblModifications.Text = "Changes detected";                                                  
+                                                          }));
+
+            
+        } 
     }
 }

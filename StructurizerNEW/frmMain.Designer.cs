@@ -100,11 +100,10 @@
             this.treeView1.ItemHeight = 16;
             this.treeView1.Location = new System.Drawing.Point(12, 83);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Scrollable = false;
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowNodeToolTips = true;
             this.treeView1.ShowRootLines = false;
-            this.treeView1.Size = new System.Drawing.Size(673, 318);
+            this.treeView1.Size = new System.Drawing.Size(434, 318);
             this.treeView1.TabIndex = 18;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 

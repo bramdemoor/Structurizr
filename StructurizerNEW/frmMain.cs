@@ -56,7 +56,13 @@ namespace StructurizerNEW
                     {
                         case "Project":
                             newobj = new Project(new DirectoryInfo(root.Path));
-                            applicationNode.Nodes.Add(root.Path);                                
+                            var projectNode = applicationNode.Nodes.Add(root.Path);
+
+                            foreach (var chapter in newobj.Children)
+                            {
+                                var chapterNode = projectNode.Nodes.Add(chapter.Path.Name);
+                            }
+
                             break;
                     }
 

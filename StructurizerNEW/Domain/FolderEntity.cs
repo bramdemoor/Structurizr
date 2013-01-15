@@ -16,6 +16,8 @@ namespace StructurizerNEW.Domain
         public MetaFile MetaData { get; private set; }
         public IEnumerable<DirectoryInfo> SubDirectories { get; private set; }
 
+        public string OutputDir { get; set; }
+
         public string ProcessedBody { get; set; }
 
         public bool HasChildren
@@ -101,10 +103,7 @@ namespace StructurizerNEW.Domain
             SubDirectories = Path.GetDirectories().Where(d => !d.Name.StartsWith("_"));     // Convention: ignore names that start with _
         }
 
-        public virtual void Process()
-        {
-            
-        }
+        public abstract void Process();
 
         private static string RemoveNr(string name)
         {

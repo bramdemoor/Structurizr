@@ -9,20 +9,19 @@ namespace StructurizerNEW.Domain
     {
         public int Level { get; set; }
 
-        public Chapter( DirectoryInfo path, int level) : base(path, "chapter")
+        public Chapter( DirectoryInfo path, int level, string outputDir) : base(path, "chapter")
         {
+            OutputDir = outputDir;
             Level = level;
         }
 
-        public void Process(string outputDir)
+        public override void Process()
         {
             ProcessedBody = "";
 
-            Parent.Children.Add(this);   
-
             foreach (var file in Path.EnumerateFiles().Where(f => f.Extension.ToLower() == ".png" || f.Extension.ToLower() == ".jpg").OrderBy(k => k.Name, new MixedNumbersAndStringsComparer()))
             {
-               File.Copy(file.FullName, outputDir + "\\" + file.Name, true);
+               File.Copy(file.FullName, OutputDir + "\\" + file.Name, true);
             }
 
              foreach (var file in Path.GetFiles("*.md").OrderBy(k => k.Name, new MixedNumbersAndStringsComparer()))
@@ -39,9 +38,9 @@ namespace StructurizerNEW.Domain
             // Sub chapters
              foreach (var chapterDir in SubDirectories.OrderBy(k => k.Name, new MixedNumbersAndStringsComparer()))
              {
-                var ch = new Chapter(chapterDir, Level + 1);
+                var ch = new Chapter(chapterDir, Level + 1, OutputDir);
                  ch.Parent = this;
-                 ch.Process(Path.FullName);
+                 ch.Process();
              }            
         }
     }

@@ -11,6 +11,12 @@ namespace StructurizerNEW.Domain
 
         public Project(DirectoryInfo path) : base(path, "project")
         {
+            foreach (var chapterDir in SubDirectories.OrderBy(k => k.Name, new MixedNumbersAndStringsComparer()))
+            {
+                var chapter = new Chapter(chapterDir, 1, Path + MetaData.OutputDir);
+                chapter.Parent = this;
+                Children.Add(chapter);
+            }
         }
 
         public override void Process()
@@ -19,11 +25,9 @@ namespace StructurizerNEW.Domain
 
             //new VisioToPngProcessor().FindAndFlattenVSDs(Path.FullName);
 
-            foreach (var chapterDir in SubDirectories.OrderBy(k => k.Name, new MixedNumbersAndStringsComparer()))
+            foreach (var chapter in Children)
             {
-                var chapter = new Chapter(chapterDir, 1);
-                chapter.Parent = this;
-                chapter.Process(Path + MetaData.OutputDir);
+                chapter.Process();
             }
 
             var result = templater.Process(this);

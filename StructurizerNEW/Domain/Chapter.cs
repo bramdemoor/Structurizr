@@ -13,6 +13,14 @@ namespace StructurizerNEW.Domain
         {
             OutputDir = outputDir;
             Level = level;
+
+            // Sections
+            foreach (var chapterDir in SubDirectories.OrderBy(k => k.Name, new MixedNumbersAndStringsComparer()))
+            {
+                var ch = new Chapter(chapterDir, Level + 1, OutputDir);
+                ch.Parent = this;
+                Children.Add(ch);
+            }
         }
 
         public override void Process()
@@ -35,12 +43,9 @@ namespace StructurizerNEW.Domain
                 ProcessedBody += exc.ProcessXlsTableToHtml(VARIABLE.FullName);                
             }
 
-            // Sub chapters
-             foreach (var chapterDir in SubDirectories.OrderBy(k => k.Name, new MixedNumbersAndStringsComparer()))
+             foreach (var chapterDir in Children)
              {
-                var ch = new Chapter(chapterDir, Level + 1, OutputDir);
-                 ch.Parent = this;
-                 ch.Process();
+                 chapterDir.Process();
              }            
         }
     }

@@ -41,8 +41,7 @@ namespace StructurizerNEW
         private void LoadConfig(string configFilePath)
         {
             treeView1.Nodes.Clear();
-            var applicationNode = treeView1.Nodes.Add("Structurizr");
-            
+            var applicationNode = treeView1.Nodes.Add("Structurizr");           
 
             using (var sr = new StreamReader(configFilePath))
             {
@@ -56,11 +55,17 @@ namespace StructurizerNEW
                     {
                         case "Project":
                             newobj = new Project(new DirectoryInfo(root.Path));
+
                             var projectNode = applicationNode.Nodes.Add(root.Path);
 
                             foreach (var chapter in newobj.Children)
                             {
                                 var chapterNode = projectNode.Nodes.Add(chapter.Path.Name);
+
+                                foreach (var section in chapter.Children)
+                                {
+                                    var sectionNode = chapterNode.Nodes.Add(section.Path.Name);    
+                                }
                             }
 
                             break;
@@ -76,6 +81,11 @@ namespace StructurizerNEW
             }
 
             applicationNode.ExpandAll();
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }

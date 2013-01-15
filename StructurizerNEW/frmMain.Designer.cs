@@ -105,7 +105,8 @@
             this.treeView1.ShowNodeToolTips = true;
             this.treeView1.ShowRootLines = false;
             this.treeView1.Size = new System.Drawing.Size(673, 318);
-            this.treeView1.TabIndex = 18;            
+            this.treeView1.TabIndex = 18;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // imgList1
             // 

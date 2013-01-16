@@ -123,6 +123,11 @@ namespace StructurizerNEW
                                                           }));
 
             
+        }
+
+        private void btnUploadTest_Click(object sender, EventArgs e)
+        {
+            FtpUpload.UploadFiles("ftp://127.0.0.1/", "tester", "test123", new FileInfo("C:\\test1.txt"));
         } 
     }
 }

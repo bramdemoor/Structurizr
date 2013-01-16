@@ -38,6 +38,7 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.imgList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblModifications = new System.Windows.Forms.Label();
+            this.btnUploadTest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picGitHub)).BeginInit();
             this.SuspendLayout();
@@ -124,12 +125,23 @@
             this.lblModifications.TabIndex = 19;
             this.lblModifications.Visible = false;
             // 
+            // btnUploadTest
+            // 
+            this.btnUploadTest.Location = new System.Drawing.Point(453, 372);
+            this.btnUploadTest.Name = "btnUploadTest";
+            this.btnUploadTest.Size = new System.Drawing.Size(75, 23);
+            this.btnUploadTest.TabIndex = 20;
+            this.btnUploadTest.Text = "Upload test";
+            this.btnUploadTest.UseVisualStyleBackColor = true;
+            this.btnUploadTest.Click += new System.EventHandler(this.btnUploadTest_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(845, 413);
+            this.Controls.Add(this.btnUploadTest);
             this.Controls.Add(this.lblModifications);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.label2);
@@ -157,5 +169,6 @@
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ImageList imgList1;
         private System.Windows.Forms.Label lblModifications;
+        private System.Windows.Forms.Button btnUploadTest;
     }
 }
